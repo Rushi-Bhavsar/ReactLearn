@@ -172,7 +172,7 @@ console.log(c);
 - Using .jsx file we can write HTML code in JS file. This creating a React Component.
 - React component can a function base code of class base code.
 - The name of the react component function should start with capital letter.
-- The function should return a single HTML render value.
+- The function should return a single HTML render value which means that single HTML tag which can have n-number of internal tags.
 
 ```jsx
 const Header = () => {
@@ -257,3 +257,115 @@ export default function Button({ caption, type = "submit" }) {
 ```
 
 - The above way of passing props is called as JS object destructuring.
+
+# Day - 3
+
+#### Children Props
+
+- When we pass the value between the component then it is called as children props.
+
+```jsx
+<menu>
+  <TabButton>Components</TabButton>
+</menu>
+```
+
+- In above case we are passing **Components** in between react component and not passing as attribute to react component.
+- We can access this **Components** value inside react component using **props.children** or **{children}**.
+
+```jsx
+export const TabButton = ({ children }) => {
+  return (
+    <li>
+      <button>{children}</button>
+    </li>
+  );
+};
+```
+
+#### EventListener Functions.
+
+- There are various EventListener present.
+- In react components EventListener are present as attributes on HTML components.
+- We need to pass function reference as a value to this attributes.
+- EventListener function are passed as a props to html tags in react.
+- We can pass EventListener function as a props to any html tag inside components.
+
+```jsx
+// Passing EventListener as props to html tag inside components.
+export const TabButton = ({ children }) => {
+  const myEvent = () => {
+    console.log("Hi Event Triggered.");
+  };
+  return (
+    <li>
+      <button onClick={myEvent}>{children}</button>
+    </li>
+  );
+};
+```
+
+- We can also pass the EventListener function as a props to components and then pass it as a props to actual html tag.
+
+```jsx
+// App.jsx
+function App() {
+  const onSelect = () => {
+    console.log("My Custom Event.");
+  };
+  return (
+    <div>
+      <main>
+        <section id="examples">
+          <h2>Examples</h2>
+          <menu>
+            <TabButton onSelect={onSelect}>Components</TabButton>
+          </menu>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+export default App;
+```
+
+```jsx
+// Component.jsx
+export const TabButton = ({ children, onSelect }) => {
+  const myEvent = () => {
+    console.log("Hi Event Triggered.");
+  };
+  return (
+    <li>
+      <button onClick={onSelect}>{children}</button>
+    </li>
+  );
+};
+```
+
+- The name of the EventListener usually starts with camelCase with **on** prefix.
+- In-order to pass the argument to EventListener function we need to pass it an arrow function which internally calls the EventListener function with normal argument.
+
+```jsx
+// App.jsx
+function App() {
+  const handleEvent = (selectedButton) => {
+    console.log(selectedButton);
+  };
+  return (
+    <div>
+      <main>
+        <section id="examples">
+          <h2>Examples</h2>
+          <menu>
+            <TabButton onSelect={() => handleEvent("components")}>
+              Components
+            </TabButton>
+          </menu>
+        </section>
+      </main>
+    </div>
+  );
+}
+```

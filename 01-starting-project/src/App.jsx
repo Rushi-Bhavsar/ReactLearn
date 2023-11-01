@@ -1,8 +1,12 @@
 import { CORE_CONCEPTS } from "./data"
 import { CoreConcept } from "./components/CoreConcept"
 import { Header } from "./components/Header/Header.jsx"
+import { TabButton } from "./components/TabButton";
 
 function App() {
+  const handleEvent = (selectedButton) => {
+    console.log(selectedButton)
+  }
   return (
     <div>
       <Header />
@@ -20,7 +24,15 @@ function App() {
             <CoreConcept {...CORE_CONCEPTS[2]} />
           </ul>
         </section>
-        <h2>Time to get started!</h2>
+        <section id="examples">
+          <h2>Examples</h2>
+          <menu>
+            <TabButton onSelect={() => {handleEvent('components')}}>Components</TabButton>
+            <TabButton onSelect={() => {handleEvent('jsx')}}>JSX</TabButton>
+            <TabButton onSelect={() => {handleEvent('props')}}>Props</TabButton>
+            <TabButton onSelect={() => {handleEvent('state')}}>State</TabButton>
+          </menu>
+        </section>
       </main>
     </div>
   );
